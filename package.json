@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
+"scripts": {
+    "postinstall": "prisma generate && prisma migrate deploy",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
-  },
+    "start": "nodemon server.js",
+    "build": "node server.js"
+},
   "prisma": {
     "schema": "data/prisma/schema.prisma"
   },
