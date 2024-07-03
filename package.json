@@ -11,7 +11,7 @@
     "schema": "data/prisma/schema.prisma"
   },
   "keywords": [],
-  "author": "",
+  "author": "Bernardo Fernandes",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.15.1",
