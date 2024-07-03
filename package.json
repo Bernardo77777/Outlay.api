@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
 "scripts": {
-    "postinstall": "prisma generate && prisma migrate deploy",
+    "generate": "npx prisma generate",
+    "migrate": "npx prisma migrate deploy",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
     "build": "node server.js"
