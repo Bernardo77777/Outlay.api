@@ -7,19 +7,26 @@ exports.create = async (req, res) => {
     try {
         const newCost = await prisma.cost.create({
             data: {
-                name,
-                cost,
-                date,
-                ispaid,
-                Payment,
-                user: { connect: { id: userId } }
+                name: name,
+                cost: cost,
+                date: new Date(date),
+                ispaid: Boolean(ispaid),
+                Payment: Payment,
+                user: {
+                    connect: {
+                        id: userId
+                    }
+                }
             }
         });
+        // Respond with the created cost entry
         res.status(201).json(newCost);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        // Handle any errors that occur during the creation process
+        res.status(500).json({ error: error.message });
     }
 };
+
 
 // Obter um custo pelo ID
 exports.getById = async (req, res) => {
@@ -77,7 +84,7 @@ exports.update = async (req, res) => {
     try {
         const updatedCost = await prisma.cost.update({
             where: { id: parseInt(id) },
-            data: { name,cost, date, ispaid, Payment }
+            data: { name,cost, date: new Date(date), ispaid, Payment }
         });
         res.json(updatedCost);
     } catch (error) {

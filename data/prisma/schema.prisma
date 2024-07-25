@@ -19,7 +19,7 @@ model User {
 model Cost {
   id           Int           @id @default(autoincrement())
   name         String        @db.VarChar(30)
-  cost         Float
+  cost         String
   date         DateTime
   ispaid       Boolean
   Payment      String        @db.VarChar(20)
@@ -32,8 +32,8 @@ model Description {
   id          Int          @id @default(autoincrement())
   text        String       @db.VarChar(500)
   costId      Int
-  attachments Attachment[]
   cost        Cost         @relation(fields: [costId], references: [id])
+  attachments Attachment[]
 }
 
 model Attachment {

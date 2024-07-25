@@ -4,7 +4,6 @@ const controller = require('../controllers/Attachement');
 
 const attachmentRouter = express.Router();
 
-// Configuração de armazenamento do Multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/');
@@ -24,5 +23,7 @@ attachmentRouter.put('/update/:id', upload.single('file'), controller.update);
 
 // Rota para download de um attachment pelo ID
 attachmentRouter.get('/download/:id', controller.download);
+
+attachmentRouter.delete('/delete/:id', controller.delete);
 
 module.exports = attachmentRouter;

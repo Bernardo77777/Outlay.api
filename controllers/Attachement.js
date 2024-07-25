@@ -3,19 +3,34 @@ const prisma = new PrismaClient();
 
 // Create a new attachment
 exports.create = async (req, res) => {
-    const { descriptionId } = req.body;
+    const { descriptionId } = req.params;
     const file = req.file ? req.file.filename : null;
+
+    // Check if file is not null
+    if (!file) {
+        return res.status(400).json({ error: "File is required" });
+    }
+
+    // Check if descriptionId is valid
+    const descriptionIdInt = parseInt(descriptionId);
+    if (isNaN(descriptionIdInt)) {
+        return res.status(400).json({ error: "Invalid description ID" });
+    }
+
     try {
         const attachment = await prisma.attachment.create({
             data: {
-                file,
+                file: file,
                 description: {
-                    connect: { id: parseInt(descriptionId) }
+                    connect: {
+                        id: descriptionIdInt // Ensure descriptionId is parsed to an integer
+                    }
                 }
             }
         });
         res.status(201).json(attachment);
     } catch (error) {
+        console.error(error);
         res.status(400).json({ error: error.message });
     }
 };
@@ -75,3 +90,16 @@ exports.download = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+
+exports.delete = async (req, res) => {
+    const { id } = req.params;
+    try {
+        await prisma.attachment.delete({
+            where: { id: parseInt(id) }
+        });
+        res.json({ message: 'attachment deleted successfully' });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
